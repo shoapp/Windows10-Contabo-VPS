@@ -63,27 +63,16 @@ EOF
 cd /root/windisk
 mkdir winfile
 
-wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1mFQ0KZAz2h_DFUlgYNWmfkcOD_mLjB4F' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1mFQ0KZAz2h_DFUlgYNWmfkcOD_mLjB4F" -O win10.iso && rm -rf /tmp/cookies.txt
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1-1mTk2hiwU6tN4NAE3JmUxgHr-LopD_j' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1-1mTk2hiwU6tN4NAE3JmUxgHr-LopD_j" -O RDP-Windows-Server-2022.iso && rm -rf /tmp/cookies.txt
 
-mount -o loop win10.iso winfile
+mount -o loop RDP-Windows-Server-2022.iso winfile
 
 rsync -avz --progress winfile/* /mnt
 
 umount winfile
 
-wget -O virtio.iso https://shorturl.at/lsOU3
-
-mount -o loop virtio.iso winfile
-
-mkdir /mnt/sources/virtio
-
-rsync -avz --progress winfile/* /mnt/sources/virtio
-
-cd /mnt/sources
-
 touch cmd.txt
 
-echo 'add virtio /virtio_drivers' >> cmd.txt
 
 wimlib-imagex update boot.wim 2 < cmd.txt
 
